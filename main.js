@@ -1,13 +1,99 @@
 /********************
  * HELPER FUNCTIONS *
  ********************/
+const makeDino = function(name, period, diet, extinct= false) {
+  return {
+    species: name,
+    period: period,
+    carnivore: diet,
+    extinct,
 
+  }
+}
+
+const makeSingular = function(dino) {
+  const dinoCopy = Object.assign({}, dino);
+  const dinoSpecies = dinoCopy.species
+
+    if (dino.species.endsWith('us')) {
+    dinoCopy.species = dinoSpecies.slice(0, dinoSpecies.length -2)
+  }
+  return dinoCopy;
+}
+
+const truncateSpecies = function(dino) {
+  const dinoCopy = Object.assign({}, dino);
+  const dinoSpecies = dinoCopy.species
+
+  if (dinoSpecies.length > 10 ) {
+    dinoCopy.species = dinoSpecies.slice(0, 7) + '...'
+  } 
+  return dinoCopy;
+}
+
+const makeExtinct = function(dino) {
+  return makeDino(dino.species, dino.period, dino.carnivore, true)
+}
+
+const isCarnivore = function(dino) {
+  return dino.carnivore;
+}
+
+const isExtinct = function(dino) {
+  return dino.extinct;
+}
+
+const isTriassic = function(dino) {
+  return dino.period === 'Triassic';
+}
+
+const isJurassic = function(dino) {
+  return dino.period === 'Jurassic';
+}
+
+const isCretaceous = function(dino) {
+  return dino.period === "Cretaceous";
+}
 
 
 /***********************
  * ITERATION FUNCTIONS *
  **********************/
+const singularizeDinos = (dinos) => {
+  return dinos.map(makeSingular);
+}
 
+const truncateDinos = (dino) => {
+  return dino.map(truncateSpecies);
+}
+
+const makeAllExtinct = (dino) => {
+  return dino.map(makeExtinct)
+}
+ 
+const carnivoresOnly = (dino) => {
+  return dino.filter(isCarnivore)
+}
+
+const herbivoresOnly = (dino) => {
+  return dino.filter(dino => !dino.carnivore);
+}
+
+const extinctOnly = (dino) => {
+  return dino.filter(isExtinct);
+}
+
+const notExtinct = (dino) => {
+  return dino.filter(dino => !dino.extinct);
+}
+
+const triassicOnly = (dino) => {
+  return dino.filter(isTriassic);
+}
+
+const notTriassic = (dino) => {
+  return dino.filter(dino => isTriassic(dino) === false)
+}
 
 
 /*********************************
